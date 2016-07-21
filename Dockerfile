@@ -24,7 +24,7 @@ RUN set -x \
 ENV GHOST_SOURCE /usr/src/ghost
 WORKDIR $GHOST_SOURCE
 
-ENV GHOST_VERSION 0.8.0
+ENV GHOST_VERSION 0.8.0-storage-qiniu
 
 RUN buildDeps=' \
 		gcc \
@@ -34,7 +34,7 @@ RUN buildDeps=' \
 	' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
-	&& wget -O ghost.zip "https://ghost.org/archives/ghost-${GHOST_VERSION}.zip" \
+	&& wget -O ghost.zip "https://github.com/yybutcher/Ghost/archive/${GHOST_VERSION}.zip" \
 	&& unzip ghost.zip \
 	&& npm install --production \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $buildDeps \
