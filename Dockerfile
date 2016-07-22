@@ -34,8 +34,10 @@ RUN buildDeps=' \
 	' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
+	$$ cd .. \
 	&& wget -O ghost.zip "https://github.com/yybutcher/ghost-storage-qiniu/archive/${GHOST_VERSION}.zip" \
-	&& unzip ghost.zip && cp -rf "./ghost-storage-qiniu-${GHOST_VERSION}/" "${GHOST_SOURCE}/" \
+	&& unzip ghost.zip && mv "./ghost-storage-qiniu-${GHOST_VERSION}/" "${GHOST_SOURCE}/" \
+	&& cd ghost \
 	&& npm install --production \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $buildDeps \
 	&& rm ghost.zip \
